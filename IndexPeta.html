@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Peta Lokasi Parkiran</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link rel="stylesheet" href="style.css"> <!-- file CSS eksternal -->
+  <style>
+    #map1, #map2 { height: 860px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h2 id="judul1">Peta Lokasi Parkiran Kampus Nusa Putra & PT. Glostar Indonesia (Web Mercator)</h2>
+
+  <div id="map1"></div>
+
+  <h2 id="judul2">Peta Lokasi Parkiran Kampus Nusa Putra & PT. Glostar Indonesia (EPSG:4326)</h2>
+  <div id="map2"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Kordinat Rumah
+    var koordinatAwal = [-6.978189, 106.836193];
+
+    // Data GeoJSON: 2 titik lokasi parkiran (Kampus Nusa Putra dan PT. Glostar Indonesia)
+    var parkiranGeoJSON = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": { "name": "Parkiran Universitas Nusa Putra" },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.8733048, -6.9053461] // lon, lat
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": { "name": "Parkiran PT. Glostar Indonesia Blok B" },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.8355612, -6.9784038] // lon, lat
+          }
+        }
+      ]
+    };
+
+    // --- Peta 1: Web Mercator (EPSG:3857) ---
+    var map1 = L.map('map1').setView(koordinatAwal, 9);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map1);
+    L.geoJSON(parkiranGeoJSON, {
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.name);
+      }
+    }).addTo(map1);
+
+    // --- Peta 2: EPSG:4326 ---
+    var crs4326 = L.CRS.EPSG4326;
+    var map2 = L.map('map2', { crs: crs4326 }).setView(koordinatAwal, 9);
+
+    // Pakai WMS (dikarenakan OSM tile tidak support EPSG:4326)
+    L.tileLayer.wms("https://ahocevar.com/geoserver/wms", {
+      layers: 'ne:NE1_HR_LC_SR_W_DR',
+      format: 'image/png',
+      transparent: false,
+      attribution: "GeoServer demo"
+    }).addTo(map2);
+
+    L.geoJSON(parkiranGeoJSON, {
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.name);
+      }
+    }).addTo(map2);
+  </script>
+</body>
+</html>
