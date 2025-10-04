@@ -1,0 +1,27 @@
+/* style.css */
+
+/* Atur font judul map pertama */
+#judul1 {
+  font-family: Pacifico, cursive;
+  font-size: 45px;
+  font-weight: bold italic;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Atur font judul map kedua */
+#judul2 {
+  font-family: Pacifico, cursive;
+  font-size: 45px;
+  font-weight: bold italic;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Atur tinggi map */
+#map1, #map2 {
+  height: 860px;
+  margin: 10px 0;
+}
