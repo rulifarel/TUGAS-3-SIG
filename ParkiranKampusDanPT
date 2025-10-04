@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Parkiran Universitas Nusa Putra"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.8733048, -6.9053461]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Parkiran PT. Glostar Indonesia Blok B"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.8355612, -6.9784038]
+      }
+    }
+  ]
+}
